@@ -1,0 +1,104 @@
+<style>
+    .calamity {
+        font-family: 'Calamity';
+        font-weight: bold;
+    }
+   .yellow {
+            -webkit-text-stroke: 2px #f5a338
+        }
+  
+    .blue {
+        position: absolute;
+        left: 10px;
+        -webkit-text-stroke: 2px #1a7ce2;
+        color: white;
+        font-size: 30px;
+    }
+    .pos2 {
+        top: 50px !important;
+    }
+    #S {
+        
+        font-size: 20px;
+        position: absolute;
+        /* color: #1a7ce2 !important; */
+        top: 80px;
+        left: 10px;
+    }
+
+    .image-cropper {
+        right: 10px;
+        top: 30px;
+        position: fixed;
+        vertical-align: central;
+        display: inline;
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        border-radius: 100%;
+    }
+    .flyout {
+        animation: flyout 4s;  
+    }
+    @keyframes flyout {
+        
+        0% {
+            display: inline-block;
+            clip-path: inset(0px 0% 0px 0px);
+            -webkit-text-stroke: 1px #1a7ce2;
+        }
+        10% {
+            -webkit-text-stroke: 1px #f5a338;
+            display: inline-block;
+            clip-path: inset(0px 0px 0px 0px);
+        }
+        
+        25% {
+            -webkit-text-stroke: 1px #f5a338;
+            display: inline-block;
+            clip-path: inset(0px 100% 0px 0px);
+            /*-webkit-transform: translateY(0%)*/
+        }
+        50% {
+            display: inline-block;
+            clip-path: inset(0px 100% 0px 0px);
+        }
+        80% {
+            -webkit-text-stroke: 1px #f5a338;
+            display: inline-block;
+            clip-path: inset(0px 0px 0px 0px);
+        }/*
+        90% {
+            -webkit-text-stroke: 1px #f5a338;
+            display: inline-block;
+            clip-path: inset(0px 0px 0px 0px);
+        }*/
+        100% {
+            -webkit-text-stroke: 1px #1a7ce2;
+            display: inline-block;
+            clip-path: inset(0px 0px 0px 0px);
+        }
+    }
+</style>
+<div id="container">
+    <p class="calamity blue"><span id="follow">Current <span class="yellow">!</span>stack:</span><br>
+        <p id=S class="calamity" style="color: white">[ ]</p>
+    </p>
+    
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/tempscript.js"></script>
+<script>
+    socket = io()
+    socket.on("stack", a => {
+        S.innerHTML = "[ " + a.join`, `.replace(/height = '16'/g, "height='25'") + " ]"
+    })
+    
+    
+
+    function reset() {
+        var vid = document.getElementById("vid")
+
+        vid.currentTime = 0
+    }
+</script>

@@ -1,0 +1,164 @@
+<style>
+    .calamity {
+        font-family: 'Calamity';
+        font-weight: bold;
+    }
+    #qqqq {
+        top: 30px;
+        
+    }
+    #cpu, #ram {
+        position: fixed;
+        vertical-align: central;
+        text-align: left;
+        font-family: Calamity;
+        font-weight: bold;
+        color:white;
+        bottom: 10px;
+       
+    }
+    #cpu {
+        left: 10px;
+    }
+    #ram {
+        left: 180px;
+    }
+    container {
+        right: 0px;
+        position: fixed;
+    }
+    
+    .blue {
+        position: absolute;
+        right: 140px;
+        -webkit-text-stroke: 2px #1a7ce2;
+        color: white;
+        font-size: 30px;
+    }
+    .pos2 {
+        top: 50px !important;
+    }
+
+    .image-cropper {
+        right: 10px;
+        top: 30px;
+        position: fixed;
+        vertical-align: central;
+        display: inline;
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        border-radius: 100%;
+    }
+    .flyout {
+        animation: flyout 4s;  
+    }
+    @keyframes flyout {
+        
+        0% {
+            display: inline-block;
+            clip-path: inset(0px 0% 0px 0px);
+            -webkit-text-stroke: 1px #1a7ce2;
+        }
+        10% {
+            -webkit-text-stroke: 1px #f5a338;
+            display: inline-block;
+            clip-path: inset(0px 0px 0px 0px);
+        }
+        
+        25% {
+            -webkit-text-stroke: 1px #f5a338;
+            display: inline-block;
+            clip-path: inset(0px 100% 0px 0px);
+            /*-webkit-transform: translateY(0%)*/
+        }
+        50% {
+            display: inline-block;
+            clip-path: inset(0px 100% 0px 0px);
+        }
+        80% {
+            -webkit-text-stroke: 1px #f5a338;
+            display: inline-block;
+            clip-path: inset(0px 0px 0px 0px);
+        }/*
+        90% {
+            -webkit-text-stroke: 1px #f5a338;
+            display: inline-block;
+            clip-path: inset(0px 0px 0px 0px);
+        }*/
+        100% {
+            -webkit-text-stroke: 1px #1a7ce2;
+            display: inline-block;
+            clip-path: inset(0px 0px 0px 0px);
+        }
+    }
+</style>
+<div id="container">
+    <p class="calamity blue" id="qqqq">
+        Latest follow: <span id="follow">Komali09</span>
+        <video id="vid" class="image-cropper" controls="false" src="./sensor.mov" onended="reset()"></video>
+    </p>
+    <p class="calamity blue pos2">
+        <!-- Latest Sub: <span id="sub">Komali09</span> -->
+    </p>
+</div>
+<p id="cpu">CPU Usage: 10%</p> <p id="ram">RAM Usage: 10%</p>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/tempscript.js"></script>
+<script>
+    socket = io()
+    socket.on("eval", func => {
+        eval(func)
+    })
+    var vid = document.getElementById("vid")
+    window.onload = function () {
+
+        document.getElementById("follow").innerHTML = initName
+        
+        // document.getElementById("sub").innerHTML = initSubName
+        vid.removeAttribute("controls")
+
+    }
+    var followStr = document.getElementById("follow")//
+    // var subStr = document.getElementById("sub")//
+    setInterval(() => {
+        document.getElementById("follow").innerHTML = followStr.innerHTML//vid.currentTime
+    }, 1)
+    function play() {
+        var vid = document.getElementById("vid")
+        vid.currentTime = 0
+        vid.play()
+        var i = 0;
+        
+        
+
+
+    }
+    socket.on("statwatch", (c, m) => {
+        document.getElementById("cpu").innerHTML = `CPU Usage: ${c}%`;
+        document.getElementById("ram").innerHTML = `RAM Usage: ${parseInt(m)}%`;
+    })
+    socket.on("userFollow", name => {newFollow(name)})
+    function newFollow(name) {
+        followStr.classList.add("flyout")
+        setTimeout(() => {followStr.innerHTML = name}, 2000)
+        setTimeout(() => { followStr.classList.remove("flyout") }, 4000)
+//        followStr.innerHTML = name
+        play()
+    }
+    // socket.on("userSub", name => {newSub(name)})
+    function newSub(name) {
+        // subStr.classList.add("flyout")
+        setTimeout(() => {subStr.innerHTML = name}, 2000)
+        // setTimeout(() => { subStr.classList.remove("flyout") }, 4000)
+//        followStr.innerHTML = name
+        play()
+    }
+    
+
+    function reset() {
+        var vid = document.getElementById("vid")
+
+        vid.currentTime = 0
+    }
+</script>
