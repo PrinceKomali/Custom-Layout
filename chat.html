@@ -1,0 +1,555 @@
+<!doctype html>
+<html>
+<head>
+    <script>
+    var doFlyout = false //TOGGLE TEXT FLY/FADE OUT
+    </script>
+
+    <title>Chat Box</title>
+
+
+    <style>
+        @font-face {
+            font-family: "Whitney";
+            src: url("./whitneymedium.otf") format('opentype');
+        }
+       
+        .purple {
+            font-family: Calibri !important;
+            font-weight: normal;
+            background-color: rgba(114, 137, 218, .2)
+        }
+
+        .otherfile {
+            background-color: #383c42;
+            height: 50px;
+            width: 240px;
+            border-radius: 8px;
+            font-family: "Helvetica" !important;
+            font-weight: normal !important;
+            border: 1px solid #222222;
+        }
+
+        .attachment {
+            max-width: 240px;
+            max-height: 280px;
+            border-radius: 10px
+        }
+
+        .inlinecode {
+            font-family: 'Courier New';
+            background-color: #333333;
+            color: white;
+            font-weight: normal;
+        }
+
+        .spoiler {
+            background-color: #000000;
+            border-radius: 1px;
+            color: #000000
+        }
+
+        .hljs {
+            overflow: hidden;
+            display: inline;
+            padding: 0.5em;
+            padding-right: 100%;
+            background: rgb(47, 49, 54) !important;
+            color: #839496;
+            white-space: pre-wrap;
+            -webkit-text-size-adjust: none;
+        }
+
+        pre code {
+            font-family: 'Courier New';
+            
+            border-radius: 10px;
+            border: solid 1px black;
+            font-weight:400
+            
+        }
+
+        .z2w {
+            width: 70px;
+            background-image: linear-gradient(to right, #81d8d0, #81d8d0, #ffc200, #d881ce, #d881ce);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .yoshi {
+            width: 140px;
+            background-image: linear-gradient(to right, red, blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .image-cropper {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 100%;
+        }
+
+        .profile-pic {
+            display: inline;
+            margin: auto;
+            margin-left: 0%;
+            margin-top: -0%;
+            height: 100%;
+            width: auto;
+        }
+
+        #yt {
+            position: fixed;
+            /*  font-size: 20px !important;*/
+            left: 54.5%;
+            bottom: 23px
+        }
+
+        .yellow {
+            -webkit-text-stroke: 1px #f5a338
+        }
+
+        .calamity {
+            font-family: 'Calamity'
+        }
+
+        .blue {
+            font-family: 'Hylia Serif Beta';
+            -webkit-text-stroke: 1px #1a7ce2;
+            color: white;
+            font-size: 50px;
+            position: fixed;
+        }
+
+        .kappacounter {
+            font-size: 22px !important;
+            bottom: 56px;
+            left: 108px
+        }
+
+        .twitch {
+            font-size: 35px;
+            left: 1290px;
+            bottom: 110px;
+        }
+        .twitch2 {
+            font-size: 35px;
+            left: 1290px;
+            bottom: 160px;
+        }
+
+        .goal {
+            margin-top: 55px;
+            margin-bottom: 1px;
+            margin-left: 0px;
+            -webkit-text-stroke: 1px #1a7ce2;
+            font-family: Calamity;
+            font-size: 20px;
+        }
+
+        
+
+        .fadeout {
+            opacity: 1;
+            -webkit-transition: opacity 5000ms linear;
+            transition: opacity 5000ms linear;
+        }
+
+        body {
+            font-size: 20px;
+            font-family: Calamity;
+            background-color: #23214a;
+            color: #ffffff;
+            font-weight: bold;
+            margin: 0px;
+            height: 100%;
+            overflow: hidden
+        }
+
+        #messagecontainer {
+            width: 600px; /*240 FOR OLD*/
+            position: absolute !important;
+            left: 15px;
+            font-size: 15px !important;
+            display: inline-block;
+            overflow-wrap: break-word;
+            bottom: 0px;
+            margin-bottom: 140px;
+            overflow: hidden;
+        }
+
+
+        .flyin {
+            -webkit-animation: test1 .1s linear;
+        }
+
+        .fade-out {
+            /*
+            animation: fade 2s;
+            -webkit-animation: fade .5s;
+            -moz-animation: fade z.5s;
+            */
+            /*color: #12e3af !important;*/
+            -webkit-animation: flyout 2.5s
+        }
+
+        @-webkit-keyframes test1 {
+            0% {
+                -webkit-transform: translateY(20px);
+                -webkit-transform: translateX(450px);
+            }
+
+            100% {
+                -webkit-transform: translateY(0%);
+                -webkit-transform: translateX(0%);
+            }
+        }
+
+
+
+        /* Animate opacity */
+        @keyframes fade {
+            0% {
+                opacity: 1
+            }
+
+            20% {
+                opacity: 0
+            }
+
+            100% {
+                opacity: 0
+            }
+        }
+
+        @keyframes flyout {
+            0% {
+                display: inline-block;
+                clip-path: inset(0px 0% 0px 0px);
+            }
+
+            20% {
+                display: inline-block;
+                clip-path: inset(0px 100% 0px 0px);
+            }
+
+            50% {
+                display: inline-block;
+                clip-path: inset(0px 100% 0px 0px);
+                /*-webkit-transform: translateY(0%)*/
+            }
+
+            100% {
+                display: inline-block;
+                clip-path: inset(0px 100% 0px 0px);
+            }
+        }
+        .embed {
+            font-weight: normal;
+        font-size: 13px;
+        padding-top: .1px;
+        padding-right: 3px;
+        padding-bottom: 5px;
+        padding-left: 8px;
+        border-radius: 10px;
+        max-width: 400px;
+        background-color: #383c42;
+        color: white;
+        min-height: 70;
+    }
+
+    .embed p.title {
+        font-weight: bold;
+    }
+
+    .embed .field .name {
+        font-weight: bold;
+    }
+
+    .embed .field .value {
+        font-weight: normal;
+
+    }
+    </style>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/styles/solarized-dark.min.css">
+    <!--
+    solarized-dark
+    gruvbox-dark
+
+    -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/highlight.min.js"></script>
+
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+    <div id="messagecontainer" width="100px" height="400px" style="overflow-y:hidden"></div>
+    <form action="">
+    </form>
+    <p class="blue twitch"><img height="40" src="./7.png" />  Followers: <span class="yellow" id="twitch"></span></p><br> <p class="blue twitch2"><img height="40" src="./7.png" />  <span style="font-size: 30px">Subs: <span class="yellow" id="twitch2"></span></p>
+    <div class="blue kappacounter" style="font-size:25px;display:block">
+        <p><img height="32" src="https://cdn.discordapp.com/emojis/726881374794940499.png?v=1" />  KappaCounter<span class="calamity">&#8482;</span>: <span class="yellow" id="kappas">0</span></p>
+    </div>
+
+    <div id="yt">
+        <p class="blue" style="font-size:33px; margin-top: 1px; margin-bottom: 10px;"><img style="vertical-align:middle;margin-bottom:10px" height="45" src="./8.png" /> Subs: <span class="yellow" id="ytsub"></span></p>
+
+        <p class="goal">600 = Combat Montage</p>
+
+    </div>
+    <!-- <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>-->
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let decToH = (n) => {
+        return "#" + ('00' + n.toString(16)).slice(-6)
+    }
+    function parseEmbed(obj){
+        
+        console.log(obj.length)
+        if(obj.length == 0) return
+        obj = obj[0]
+        if(obj.type != "rich") return ""
+        var embedElem = document.createElement('div')
+        embedElem.classList.add("embed")
+        if(obj.title){
+            var t = document.createElement("p")
+            t.classList.add("title")
+            t.innerHTML = obj.title
+            embedElem.appendChild(t)
+        }
+        if(obj.color) embedElem.style.borderLeft = "5px solid " + decToH(obj.color)
+        if(obj.fields) {
+            for(i in obj.fields){
+                var e = document.createElement("div")
+                e.classList.add("field")
+                var n = document.createElement("p")
+                n.classList.add("name")
+                n.innerHTML = format(obj.fields[i].name)
+                e.appendChild(n)
+                var v = document.createElement("p")
+                v.classList.add('value')
+                v.innerHTML = format(obj.fields[i].value)
+                e.appendChild(v)
+                embedElem.appendChild(e)
+            }
+            
+        }   
+        if(obj.description){
+            var d = document.createElement("p")
+            d.classList.add("description")
+            d.innerHTML = format(obj.description)
+            embedElem.appendChild(d)
+        }     
+        return embedElem;
+        
+    }
+
+        function format(text) {
+            var bold = /\*\*(.*?)\*\*/gm;
+            var html = text.replace(bold, '<b>$1</b>'); html = html.replace(/\*(.*?)\*/gm, '<i>$1</i>')
+            html = html.replace(/\_\_(.*?)\_\_/gm, '<u>$1</u>')
+            html = html.replace(/\_(.*?)\_/gm, '<i>$1</i>')
+            html = html.replace(/\`(.*?)\`/gm, '<span class="inlinecode">$1</span>')
+            html = html.replace(/\~\~(.*?)\~\~/gm, '<strike>$1</strike>')
+            html = html.replace(/\|\|(.*?)\|\|/gm, '<span class="spoiler">$1</span>')
+            return html;
+        }
+        var isDuration = true
+        var duration = 10000
+        socket = io()
+        socket.on("discordmessage", (color, user, content, img, id, mod, file, mE) => {
+            recal(color, user, content, img, id, mod, file, mE)
+            console.log(parseEmbed(mE))
+        })
+        socket.on("duration", res => {
+            if (res == "infinite") {
+                isDuration = false
+            }
+            else {
+                duration = res
+            }
+        })
+        var lightSide = ["yoshiruns1", "therealfishal", "undodog345", "les__ggaming", "letmethinkofausername", "flixiander"]
+        var dlightside = ["797266395284766741", "691700459395743855", "423935191556423693", "522856923519778846", "327879060443234314", "755416722323931198", "802649322054877235"]
+        var gods = ["dovakine9764", 'kwerple', "titlefire", "xeryph1"]
+        var dgods = ["638287162172768257", "662095826692079618", "264117376394592257"]
+        var span1 = document.getElementById("twitch")
+        var subspan = document.getElementById("twitch2")
+        var span2 = document.getElementById("ytsub")
+        socket.on('subs', (twitch, yt, twitch2) => {
+            span1.innerHTML = twitch
+            subspan.innerHTML = twitch2
+            span2.innerHTML = yt
+        })
+        function urlify(text) {
+            var repnum = Math.random().toString()
+            //var reg = new RegExp("<img class='emote' height = '25' src= 'http", "g")
+            var reg1 = new RegExp("img class='emote' height = '25' src= 'http", "g")
+            text = text.replace(reg1, repnum)
+            var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+            text = text.replace(urlRegex, function (url) {
+                return '<span style=\"color:#1eb1fa\">' + url + '</span>';
+            });
+            var repreg = new RegExp(repnum, "g")
+            text = text.replace(repreg, "img class='emote' height = '18' src= 'http")
+            return text
+        }
+        setInterval(() => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightBlock(block);
+            });
+        }, 1)
+        function recal(color, user, content, img, id, mod, file, mE) {
+            content = urlify(content)
+            //content = content.replace("```", "<pre><code class=\"html\">")
+            if (content.includes("```")) {
+                content = content.split("```")
+                var lang = "plaintext"
+                for (i = 0; i < content.length - 1; i += 2) {
+                    if (!content[i + 1].startsWith(" ") && !content[i + 1].startsWith("\n")) {
+                        content[i+1] = content[i + 1].split("\n")
+                        lang = content[i + 1][0]
+                        content[i + 1].shift()
+                        content[i + 1] = content[i + 1].join("\n")
+                    }
+                    if (content[i + 1].startsWith("\n")) content[i + 1] = content[i + 1].substring(1)
+                    content[i] = content[i] + "<pre><code class='" + lang + "'>"
+                    content[i + 1] = content[i + 1] + "</pre></code>"
+                }
+                content = content.join("")
+                
+
+            }
+            content = format(content)
+            
+            
+            content = content.replace(/\n/g, "<br>")
+            var extra = "<div class=\"image-cropper\"> <img src=\"" + img + "\" alt=\"avatar\" class=\"profile-pic\"> </div>"
+            var element = document.createElement("p")
+            element.className = "flyin"
+            var spanelement = document.createElement("span")
+            spanelement.appendChild(document.createTextNode(user + ': '))
+            element.appendChild(spanelement)
+
+
+            
+            element.innerHTML = '<span style = "color:' + color + ';font-weight:bold">' + user + ': </span><wbr>' + content
+            if (id == "327879060443234314") element.innerHTML = " <img height='16' src = 'https://static-cdn.jtvnw.net/badges/v1/5527c58c-fb7d-422d-b71b-f309dcb85cc1/3'> " + element.innerHTML
+            if (mod && id != "327879060443234314") element.innerHTML = " <img height='16' src = 'https://static-cdn.jtvnw.net/badges/v1/3267646d-33f0-4b17-b3df-f923a41db1d0/3'> " + element.innerHTML
+            if (dgods.includes(id)) element.innerHTML = " <img height='16' src = './god.png'> " + element.innerHTML
+            if (id == "658861212657909791") element.innerHTML = " <img height='16' src = './periwinkle.png'> " + element.innerHTML
+            if (dlightside.includes(id)) element.innerHTML = " <img height='16' src = './light_side.png'> " + element.innerHTML
+            try{if(parseEmbed(mE) != "") element.appendChild(parseEmbed(mE))}catch(e){}
+            element.innerHTML = extra + " " + element.innerHTML + file
+            
+            
+            //element.innerHTML = '<span style = "color:' + color + ';font-weight:bold">' + user + ': </span>' + content
+
+            var x = document.getElementById('messagecontainer')
+
+            x.appendChild(element)
+            //element.childNodes[0].classList.add("flyin")
+            if (isDuration && doFlyout) {
+                setTimeout(function () {
+                    element.classList.add('fade-out');
+                    setTimeout(function () {
+                        element.parentNode.removeChild(element);
+
+                    }, 1000)
+                }, duration)
+            
+            }
+
+
+
+        }
+        function kFormatter(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            //return Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
+        }
+        function updateKappa(num) {
+            console.log(num)
+        }
+        socket.on('kcount', num => {
+            document.getElementById("kappas").innerText = kFormatter(num)
+        })
+        socket.on("twitchmessage", (mod, color, user, content, test, extra) => {
+            twitchrecal(mod, color, user, content, extra)
+            //console.log(test)
+        })
+        function twitchrecal(mod, color, user, content, extra) {
+            
+            content = urlify(content)
+            let r1 = new RegExp("<img height = '25' src = 'TWITCHDOMAIN/emoticons", "g")
+            let r2 = new RegExp("CUSTOMTAGXXXXXX", "g")
+            content = content.replace(r1, "<img height = '16' src = 'https://static-cdn.jtvnw.net/emoticons")
+            content = content.replace(r2, "<img height='16' src='")
+            if(content.includes("Want to become famous") || content.toLowerCase().includes("bigfollows")) return 
+            if (extra == null) {
+                extra = ""
+            }
+            var element = document.createElement("p")
+            element.className = "flyin"
+            var spanelement = document.createElement("span")
+            spanelement.appendChild(document.createTextNode(user + ': '))
+
+            element.appendChild(spanelement)
+            //https://static-cdn.jtvnw.net/badges/v1/3267646d-33f0-4b17-b3df-f923a41db1d0/3 mod
+            //https://static-cdn.jtvnw.net/badges/v1/5527c58c-fb7d-422d-b71b-f309dcb85cc1/3 broadcaster
+            // ./light_side.png
+            if (user == "Z2W_02") {
+                element.innerHTML = '<span style = "font-weight:bold" class="z2w">Z2W: </span><wbr>' + content
+            } else if (user == "yoshiruns1") {
+                element.innerHTML = '<span style = "font-weight:bold" class="yoshi">YoshiRuns: </span><wbr>' + content
+            } else if (user == "liorwastaken" || user == "underscorelior") {
+                element.innerHTML = '<span style = "font-weight:bold;color:#f1c40f">Lior: </span><wbr>' + content
+            }
+            else {
+                element.innerHTML = '<span style = "color:' + color + ';font-weight:bold">' + user + ': </span><wbr>' + content
+            }
+            if (lightSide.includes(user.toLowerCase())) {
+                extra = extra + " <img height='16' src = './light_side.png'> "
+            }
+            if (gods.includes(user.toLowerCase())) {
+                extra = extra + " <img height='16' src = './god.png'> "
+            }
+            if (user.toLowerCase() == "lieutenantperiwinkle") {
+                extra = extra + " <img height='16' src = './periwinkle.png'> "
+            }
+            var badgeStr = ""
+            if(mod && mod != {}){
+            for(i in Object.keys(mod)){
+                console.log(mod[Object.keys(mod)[i]])
+                badgeStr = badgeStr + " <img height='16' src = '" + mod[Object.keys(mod)[i]] + "'> "
+            }}
+            
+            //else if (mod && Object.keys(mod).includes("moderator")) {
+                element.innerHTML = extra + badgeStr  + element.innerHTML
+            //}
+            //else {
+              //  element.innerHTML = extra + " " + element.innerHTML
+            //}
+            var x = document.getElementById('messagecontainer')
+            x.appendChild(element)
+            var reg = new RegExp("", "g")
+            //spanelement.innerHTML = spanelement.innerText.replace(reg, " ")
+
+            if (isDuration && doFlyout) {
+                setTimeout(function () {
+                    element.classList.add('fade-out');
+                setTimeout(function () {
+                        element.parentNode.removeChild(element);
+                    
+                    }, 1000)
+                }, duration)
+            }
+        }
+
+    </script>
+</body>
+</html>
+
